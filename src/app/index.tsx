@@ -6,7 +6,12 @@ import {
   FlatList,
   Image,
   Dimensions,
+  TouchableOpacity,
+  ScrollView,
+  SafeAreaView,
 } from 'react-native';
+
+import { router } from 'expo-router';
 
 const { width } = Dimensions.get('window');
 
@@ -33,19 +38,19 @@ const doces = [
 
 const salgados = [
   {
-    id: '1',
+    id: '4',
     title: 'Hambúrguer',
     image:
       'https://images.unsplash.com/photo-1568901346375-23c9450c58cd',
   },
   {
-    id: '2',
+    id: '5',
     title: 'Pizza',
     image:
       'https://images.unsplash.com/photo-1513104890138-7c749659a591',
   },
   {
-    id: '3',
+    id: '6',
     title: 'Batata Frita',
     image:
       'https://images.unsplash.com/photo-1576107232684-1279f390859f',
@@ -54,13 +59,24 @@ const salgados = [
 
 function RecipeCard({ item }: any) {
   return (
-    <View style={styles.card}>
-      <Image source={{ uri: item.image }} style={styles.image} />
+    <TouchableOpacity
+      style={styles.card}
+      activeOpacity={0.8}
+      onPress={() =>
+        router.push(`/receita/${item.id}` as any)
+      }
+    >
+      <Image
+        source={{ uri: item.image }}
+        style={styles.image}
+      />
 
       <View style={styles.overlay}>
-        <Text style={styles.cardTitle}>{item.title}</Text>
+        <Text style={styles.cardTitle}>
+          {item.title}
+        </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
@@ -82,24 +98,40 @@ function Carousel({ title, data }: any) {
 
 export default function Home() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.mainTitle}>🍴 Receitas</Text>
-
-      <Carousel title="🍩 Doces" data={doces} />
-
-      <Carousel title="🍕 Salgados" data={salgados} />
-    </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.container}
+      >
+        <Text style={styles.mainTitle}>
+          🍴 Receitas
+        </Text>
+  
+        <Carousel
+          title="🍩 Doces"
+          data={doces}
+        />
+  
+        <Carousel
+          title="🧀 Salgados"
+          data={salgados}
+        />
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    flex: 1,
+    paddingHorizontal: 16,
+    paddingTop: 20,
     gap: 24,
+    backgroundColor: '#F8F8F8',
   },
 
-  mainTitle: {
-    fontSize: 32,
+    mainTitle: {
+    fontSize: width > 768 ? 42 : 32,
     fontWeight: 'bold',
     marginTop: 10,
     color: '#222',
@@ -117,8 +149,8 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    width: width * 0.7,
-    height: 220,
+    width: width > 768 ? 400 : width * 0.82,
+    height: width > 768 ? 280 : 220,
     marginRight: 16,
     borderRadius: 24,
     overflow: 'hidden',
@@ -128,6 +160,7 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: '100%',
+    resizeMode: 'cover',
   },
 
   overlay: {
@@ -140,7 +173,7 @@ const styles = StyleSheet.create({
 
   cardTitle: {
     color: '#fff',
-    fontSize: 22,
+    fontSize: width > 768 ? 28 : 22,
     fontWeight: 'bold',
   },
 });
