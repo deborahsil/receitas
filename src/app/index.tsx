@@ -32,6 +32,18 @@ const doces = [
     image:
       'https://images.unsplash.com/photo-1486427944299-d1955d23e34d?auto=format&fit=crop&w=1000&q=80',
   },
+  {
+    id: '10',
+    title: 'Brigadeiro',
+    image:
+      'https://images.unsplash.com/photo-1621303837174-89787a7d4729',
+  },
+  {
+    id: '11',
+    title: 'Cheesecake',
+    image:
+      'https://images.unsplash.com/photo-1533134242443-d4fd215305ad',
+  },
 ];
 
 const salgados = [
@@ -53,6 +65,39 @@ const salgados = [
     image:
       'https://images.unsplash.com/photo-1576107232684-1279f390859f?auto=format&fit=crop&w=1000&q=80',
   },
+  {
+    id: '12',
+    title: 'Coxinha',
+    image:
+      'https://images.unsplash.com/photo-1628294896516-2d1dce57c82c',
+  },
+  {
+    id: '13',
+    title: 'Pastel',
+    image:
+      'https://images.unsplash.com/photo-1612392062798-53b2f6df2c0a',
+  },
+];
+
+const bebidas = [
+  {
+    id: '7',
+    title: 'Suco de Laranja',
+    image:
+      'https://images.unsplash.com/photo-1600271886742-f049cd5bba3f',
+  },
+  {
+    id: '8',
+    title: 'Milk Shake',
+    image:
+      'https://images.unsplash.com/photo-1572490122747-3968b75cc699',
+  },
+  {
+    id: '9',
+    title: 'Café Gelado',
+    image:
+      'https://images.unsplash.com/photo-1517701604599-bb29b565090c',
+  },
 ];
 
 function RecipeCard({ item, cardWidth }: any) {
@@ -69,13 +114,20 @@ function RecipeCard({ item, cardWidth }: any) {
       />
 
       <View style={styles.overlay}>
-        <Text style={styles.cardTitle}>
-          {item.title}
-        </Text>
-      </View>
+  <Text style={styles.cardTitle}>
+    {item.title}
+  </Text>
+
+  <View style={styles.button}>
+    <Text style={styles.buttonText}>
+      Ver Receita
+    </Text>
+  </View>
+</View>
     </TouchableOpacity>
   );
 }
+
 
 function Carousel({ title, data, cardWidth }: any) {
   return (
@@ -125,7 +177,12 @@ export default function Home() {
             },
           ]}
         >
-          🍴 Receitas
+          
+          <View style={styles.navbar}>
+           <Text style={styles.logo}>
+    CookBook+
+  </Text>
+</View>
         </Text>
 
         <Carousel
@@ -138,6 +195,11 @@ export default function Home() {
           title="🍕 Salgados"
           data={salgados}
           cardWidth={cardWidth}
+        />
+
+        <Carousel
+        title="🥤 Bebidas"
+        data={bebidas}
         />
       </ScrollView>
     </SafeAreaView>
@@ -195,4 +257,34 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
   },
+
+  button: {
+    marginTop: 10,
+    backgroundColor: '#FF7A00',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+
+  buttonText: {
+    color: '#FFF',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+
+  navbar: {
+    backgroundColor: '#FF7A00',
+    padding: 18,
+    borderRadius: 15,
+    marginBottom: 20,
+    alignItems: 'center',
+  },
+  
+  logo: {
+    color: '#FFF',
+    fontSize: 28,
+    fontWeight: 'bold',
+  },
 });
+
