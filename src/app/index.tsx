@@ -32,18 +32,6 @@ const doces = [
     image:
       'https://images.unsplash.com/photo-1486427944299-d1955d23e34d?auto=format&fit=crop&w=1000&q=80',
   },
-  {
-    id: '10',
-    title: 'Brigadeiro',
-    image:
-      'https://images.unsplash.com/photo-1621303837174-89787a7d4729',
-  },
-  {
-    id: '11',
-    title: 'Cheesecake',
-    image:
-      'https://images.unsplash.com/photo-1533134242443-d4fd215305ad',
-  },
 ];
 
 const salgados = [
@@ -64,18 +52,6 @@ const salgados = [
     title: 'Batata Frita',
     image:
       'https://images.unsplash.com/photo-1576107232684-1279f390859f?auto=format&fit=crop&w=1000&q=80',
-  },
-  {
-    id: '12',
-    title: 'Coxinha',
-    image:
-      'https://images.unsplash.com/photo-1628294896516-2d1dce57c82c',
-  },
-  {
-    id: '13',
-    title: 'Pastel',
-    image:
-      'https://images.unsplash.com/photo-1612392062798-53b2f6df2c0a',
   },
 ];
 
@@ -105,42 +81,52 @@ function RecipeCard({ item, cardWidth }: any) {
     <TouchableOpacity
       style={[styles.card, { width: cardWidth }]}
       activeOpacity={0.8}
-      onPress={() => router.push(`/receita/${item.id}` as any)}
+      onPress={() =>
+        router.push(`/receita/${item.id}` as any)
+      }
     >
       <Image
         source={{ uri: item.image }}
         style={styles.image}
-        resizeMode="cover"
       />
 
       <View style={styles.overlay}>
-  <Text style={styles.cardTitle}>
-    {item.title}
-  </Text>
+        <Text style={styles.cardTitle}>
+          {item.title}
+        </Text>
 
-  <View style={styles.button}>
-    <Text style={styles.buttonText}>
-      Ver Receita
-    </Text>
-  </View>
-</View>
+        <View style={styles.button}>
+          <Text style={styles.buttonText}>
+            Ver Receita
+          </Text>
+        </View>
+      </View>
     </TouchableOpacity>
   );
 }
 
-
-function Carousel({ title, data, cardWidth }: any) {
+function Carousel({
+  title,
+  data,
+  cardWidth,
+}: any) {
   return (
     <View style={styles.section}>
-      <Text style={styles.sectionTitle}>
-        {title}
-      </Text>
+      <View style={styles.sectionHeader}>
+        <Text style={styles.sectionTitle}>
+          {title}
+        </Text>
+
+        <Text style={styles.verTodas}>
+          Ver Todas
+        </Text>
+      </View>
 
       <FlatList
-        horizontal
         data={data}
-        keyExtractor={(item) => item.id}
+        horizontal
         showsHorizontalScrollIndicator={false}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <RecipeCard
             item={item}
@@ -155,11 +141,14 @@ function Carousel({ title, data, cardWidth }: any) {
 export default function Home() {
   const { width } = useWindowDimensions();
 
-  const isTablet = width >= 768;
-
-  const cardWidth = isTablet
-    ? 450
-    : width * 0.82;
+  const cardWidth =
+    width > 1400
+      ? 300
+      : width > 1000
+      ? 280
+      : width > 768
+      ? 260
+      : width * 0.82;
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -167,23 +156,30 @@ export default function Home() {
         contentContainerStyle={styles.container}
         showsVerticalScrollIndicator={false}
       >
-        <Text
-          style={[
-            styles.mainTitle,
-            {
-              fontSize: isTablet
-                ? 42
-                : 32,
-            },
-          ]}
-        >
-          
-          <View style={styles.navbar}>
-           <Text style={styles.logo}>
-    CookBook+
-  </Text>
-</View>
-        </Text>
+        <View style={styles.hero}>
+          <View style={styles.heroLeft}>
+            <Text style={styles.heroTitle}>
+              CookBook+
+            </Text>
+
+            <Text style={styles.heroSubtitle}>
+              Seu livro de receitas na palma da mão.
+            </Text>
+          </View>
+
+          <View style={styles.heroCard}>
+            <Text style={styles.heroCardTitle}>
+              SOBRE O APP
+            </Text>
+
+            <Text style={styles.heroCardText}>
+              Aplicativo desenvolvido em
+              React Native e Expo para
+              visualizar receitas de doces,
+              salgados e bebidas.
+            </Text>
+          </View>
+        </View>
 
         <Carousel
           title="🍩 Doces"
@@ -192,15 +188,59 @@ export default function Home() {
         />
 
         <Carousel
-          title="🍕 Salgados"
+          title="🍔 Salgados"
           data={salgados}
           cardWidth={cardWidth}
         />
 
         <Carousel
-        title="🥤 Bebidas"
-        data={bebidas}
+          title="🥤 Bebidas"
+          data={bebidas}
+          cardWidth={cardWidth}
         />
+
+        <View style={styles.footer}>
+          <View style={styles.footerCard}>
+            <Text style={styles.footerTitle}>
+              📖 Receitas
+            </Text>
+            <Text>
+              Diversas receitas organizadas.
+            </Text>
+          </View>
+
+          <View style={styles.footerCard}>
+            <Text style={styles.footerTitle}>
+              ⭐ Favoritos
+            </Text>
+            <Text>
+              Salve suas receitas favoritas.
+            </Text>
+          </View>
+
+          <View style={styles.footerCard}>
+            <Text style={styles.footerTitle}>
+              🍳 Detalhes
+            </Text>
+            <Text>
+              Ingredientes e preparo.
+            </Text>
+          </View>
+
+          <View style={styles.footerCard}>
+            <Text style={styles.footerTitle}>
+              ℹ️ Sobre
+            </Text>
+            <Text>
+              Informações do projeto.
+            </Text>
+          </View>
+        </View>
+
+        <Text style={styles.footerText}>
+          Desenvolvido por Giovanna,
+          Beatriz Marchesini e Déborah
+        </Text>
       </ScrollView>
     </SafeAreaView>
   );
@@ -208,35 +248,78 @@ export default function Home() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 16,
-    paddingTop: 20,
-    paddingBottom: 30,
+    padding: 20,
     backgroundColor: '#F8F8F8',
   },
 
-  mainTitle: {
+  hero: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    marginBottom: 35,
+  },
+
+  heroLeft: {
+    flex: 1,
+    minWidth: 250,
+  },
+
+  heroTitle: {
+    fontSize: 42,
     fontWeight: 'bold',
-    color: '#222',
-    marginBottom: 24,
+    color: '#FF7A00',
+  },
+
+  heroSubtitle: {
+    fontSize: 18,
+    marginTop: 8,
+    color: '#555',
+  },
+
+  heroCard: {
+    width: 320,
+    backgroundColor: '#FFF4EC',
+    padding: 20,
+    borderRadius: 16,
+    marginTop: 10,
+  },
+
+  heroCardTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+
+  heroCardText: {
+    lineHeight: 22,
   },
 
   section: {
-    marginBottom: 32,
+    marginBottom: 35,
   },
 
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: '#444',
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginBottom: 12,
   },
 
+  sectionTitle: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+
+  verTodas: {
+    color: '#FF7A00',
+    fontWeight: 'bold',
+  },
+
   card: {
-    height: 250,
-    marginRight: 16,
-    borderRadius: 24,
+    height: 320,
+    borderRadius: 20,
     overflow: 'hidden',
-    backgroundColor: '#EAEAEA',
+    marginRight: 15,
   },
 
   image: {
@@ -254,15 +337,14 @@ const styles = StyleSheet.create({
 
   cardTitle: {
     color: '#FFF',
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: 'bold',
   },
 
   button: {
     marginTop: 10,
     backgroundColor: '#FF7A00',
-    paddingVertical: 8,
-    paddingHorizontal: 12,
+    paddingVertical: 10,
     borderRadius: 10,
     alignItems: 'center',
   },
@@ -273,18 +355,31 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 
-  navbar: {
-    backgroundColor: '#FF7A00',
-    padding: 18,
-    borderRadius: 15,
-    marginBottom: 20,
-    alignItems: 'center',
+  footer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    marginTop: 30,
   },
-  
-  logo: {
-    color: '#FFF',
-    fontSize: 28,
+
+  footerCard: {
+    flex: 1,
+    minWidth: 220,
+    backgroundColor: '#FFF',
+    padding: 20,
+    borderRadius: 16,
+    margin: 8,
+  },
+
+  footerTitle: {
     fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: 8,
+  },
+
+  footerText: {
+    textAlign: 'center',
+    marginTop: 25,
+    color: '#666',
   },
 });
-
