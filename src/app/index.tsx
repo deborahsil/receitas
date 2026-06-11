@@ -158,7 +158,7 @@ export default function Home() {
                 style={styles.secondaryButton}
                 onPress={() => setSelectedCategory('Doces')}
               >
-                <Text style={styles.secondaryButtonText}>Explorar doces</Text>
+                <Text style={styles.secondaryButtonText}>Explorar doces:</Text>
               </TouchableOpacity>
             </View>
           </View>
