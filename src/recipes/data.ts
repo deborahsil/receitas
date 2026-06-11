@@ -179,7 +179,7 @@ export const receitas: Record<string, Recipe> = {
     nome: 'Suco de Laranja',
     categoria: 'Bebidas',
     imagem:
-      'https://images.unsplash.com/photo-1600271886742-f049cd5bba3f?auto=format&fit=crop&w=1200&q=80',
+      'https://veja.abril.com.br/wp-content/uploads/2024/02/suco-laranja.jpg?crop=1&resize=1212,909',
     tempo: '10 min',
     porcoes: '2 copos',
     dificuldade: 'Facil',
@@ -239,7 +239,7 @@ export const receitas: Record<string, Recipe> = {
     nome: 'Brigadeiro Tradicional',
     categoria: 'Doces',
     imagem:
-      'https://images.unsplash.com/photo-1581404917879-340fc8c4b803?auto=format&fit=crop&w=1200&q=80',
+      'https://dafeiraaobaile.com.br/wp-content/uploads/2023/02/Dafeiraaobaile-Novembro-69.jpg',
     tempo: '25 min',
     porcoes: '20 unidades',
     dificuldade: 'Facil',
@@ -286,7 +286,7 @@ export const receitas: Record<string, Recipe> = {
     nome: 'Pastel de Queijo',
     categoria: 'Salgados',
     imagem:
-      'https://images.unsplash.com/photo-1612392062798-53b2f6df2c0a?auto=format&fit=crop&w=1200&q=80',
+      'https://www.sabornamesa.com.br/media/k2/items/cache/990810f9242641a8e264ce996a78ed28_XL.jpg',
     tempo: '40 min',
     porcoes: '10 unidades',
     dificuldade: 'Facil',
