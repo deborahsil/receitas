@@ -45,6 +45,7 @@ function splitList(value: string, fallback: string[]) {
 
 export default function Home() {
   const { width } = useWindowDimensions();
+  const isMobile = width < 768;
   const [recipes, setRecipes] = useState<Recipe[]>(() => [...recipeList]);
   const [selectedCategory, setSelectedCategory] = useState<RecipeCategory | 'Todas'>(
     'Todas'
@@ -246,27 +247,28 @@ export default function Home() {
           </View>
         </View>
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Categorias</Text>
+        <View style={styles.categoryGrid}>
+  {categories.map((item) => (
+    <TouchableOpacity
+      key={item}
+      activeOpacity={0.84}
+      style={[
+        styles.categoryCard,
+        {  width: isMobile ? '100%' : 250,
+         borderTopColor: categoryDetails[item].color }
+      ]}
+      onPress={() => setSelectedCategory(item)}
+    >
+      <Text style={styles.categoryCardTitle}>
+        {categoryDetails[item].title}
+      </Text>
 
-          <FlatList
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            data={categories}
-            keyExtractor={(item) => item}
-            contentContainerStyle={styles.categoryList}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                activeOpacity={0.84}
-                style={[styles.categoryCard, { borderTopColor: categoryDetails[item].color }]}
-                onPress={() => setSelectedCategory(item)}
-              >
-                <Text style={styles.categoryCardTitle}>{categoryDetails[item].title}</Text>
-                <Text style={styles.categoryCardText}>{categoryDetails[item].subtitle}</Text>
-              </TouchableOpacity>
-            )}
-          />
-        </View>
+      <Text style={styles.categoryCardText}>
+        {categoryDetails[item].subtitle}
+      </Text>
+    </TouchableOpacity>
+  ))}
+</View>
 
         <View style={[styles.addSection, isWide && styles.addSectionWide]}>
           <View style={styles.addCopy}>
@@ -285,6 +287,7 @@ export default function Home() {
               placeholderTextColor="#9A8D80"
               style={styles.input}
             />
+            </View>
 
             <View style={styles.categoryRow}>
               {categories.map((category) => (
@@ -309,22 +312,14 @@ export default function Home() {
               ))}
             </View>
 
-            <View style={styles.inputRow}>
-              <TextInput
-                value={form.tempo}
-                onChangeText={(tempo) => setForm((current) => ({ ...current, tempo }))}
-                placeholder="Tempo"
-                placeholderTextColor="#9A8D80"
-                style={[styles.input, styles.inputHalf]}
-              />
-              <TextInput
-                value={form.porcoes}
-                onChangeText={(porcoes) => setForm((current) => ({ ...current, porcoes }))}
-                placeholder="Porcoes"
-                placeholderTextColor="#9A8D80"
-                style={[styles.input, styles.inputHalf]}
-              />
-            </View>
+            <View
+  style={[
+    styles.inputRow,
+    {
+      flexDirection: width < 600 ? 'column' : 'row',
+    },
+  ]}
+>
 
             <TextInput
               value={form.imagem}
@@ -570,7 +565,12 @@ const styles = StyleSheet.create({
     borderColor: '#F0E1D2',
     borderTopWidth: 5,
     padding: 16,
+    
   },
+
+inputRow: {
+  gap: 10,
+},
   categoryCardTitle: {
     color: '#241A12',
     fontSize: 20,
@@ -642,5 +642,26 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 15,
     fontWeight: '900',
+  },
+
+  categoryGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    gap: 12,
+  },
+  
+  categoryCard: {
+    flexBasis: '32%',
+    minWidth: 220,
+    flexGrow: 1,
+  
+    minHeight: 130,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#F0E1D2',
+    borderTopWidth: 5,
+    padding: 16,
   },
 });
