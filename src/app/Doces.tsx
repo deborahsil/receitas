@@ -10,7 +10,8 @@ import { getRecipesByCategory, toggleFavorite } from '../recipes/data';
 export default function Doces() {
   const { width } = useWindowDimensions();
   const [, setFavoriteVersion] = useState(0);
-  const cardWidth = width >= 1120 ? '31.6%' : width >= 760 ? '47.5%' : '100%';
+  const isCompact = width < 520;
+  const cardWidth = width >= 1120 ? '31.6%' : width >= 740 ? '47.4%' : '100%';
   const doces = getRecipesByCategory('Doces');
 
   const handleToggleFavorite = (recipeId: string) => {
@@ -23,13 +24,13 @@ export default function Doces() {
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
         <AppHeader active="receitas" />
 
-        <View style={styles.headerBlock}>
+        <View style={[styles.headerBlock, isCompact && styles.headerBlockCompact]}>
           <Text style={styles.eyebrow}>Categoria</Text>
-          <Text style={styles.title}>Doces</Text>
+          <Text style={[styles.title, isCompact && styles.titleCompact]}>Doces</Text>
           <Text style={styles.text}>Sobremesas, bolos e receitas para adoçar o dia.</Text>
         </View>
 
-        <View style={styles.grid}>
+        <View style={[styles.grid, isCompact && styles.gridCompact]}>
           {doces.map((recipe) => (
             <RecipeCard
               key={recipe.id}
@@ -63,6 +64,9 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     paddingBottom: 18,
   },
+  headerBlockCompact: {
+    paddingHorizontal: 14,
+  },
   eyebrow: {
     color: '#B94E00',
     fontSize: 13,
@@ -74,6 +78,10 @@ const styles = StyleSheet.create({
     fontSize: 38,
     fontWeight: '900',
     marginTop: 6,
+  },
+  titleCompact: {
+    fontSize: 31,
+    lineHeight: 37,
   },
   text: {
     color: '#6B6259',
@@ -90,5 +98,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 16,
+  },
+  gridCompact: {
+    paddingHorizontal: 14,
+    gap: 14,
   },
 });

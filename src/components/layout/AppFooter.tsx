@@ -1,9 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 
 export function AppFooter() {
+  const { width } = useWindowDimensions();
+  const isCompact = width < 520;
+
   return (
-    <View style={styles.footer}>
+    <View style={[styles.footer, isCompact && styles.footerCompact]}>
       <Text style={styles.title}>CookBook+</Text>
       <Text style={styles.text}>
         Desenvolvido por Giovanna Isabela, Beatriz Marchesini e Deborah.
@@ -24,6 +27,12 @@ const styles = StyleSheet.create({
     borderTopColor: '#F0E1D2',
     marginTop: 24,
   },
+  footerCompact: {
+    paddingHorizontal: 14,
+    paddingTop: 18,
+    paddingBottom: 26,
+    marginTop: 16,
+  },
   title: {
     color: '#E85D04',
     fontSize: 18,
@@ -37,4 +46,3 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
 });
-

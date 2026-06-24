@@ -3,13 +3,14 @@ import { StyleSheet, Text, TouchableOpacity, View, useWindowDimensions } from 'r
 import { router } from 'expo-router';
 
 type AppHeaderProps = {
-  active?: 'home' | 'receitas' | 'favoritos' | 'sobre';
+  active?: 'home' | 'receitas' | 'favoritos' | 'comunidade' | 'sobre';
 };
 
 const links = [
   { key: 'home', label: 'Inicio', href: '/' },
   { key: 'receitas', label: 'Receitas', href: '/receita' },
   { key: 'favoritos', label: 'Favoritos', href: '/favoritos' },
+  { key: 'comunidade', label: 'Comunidade', href: '/comunidade' },
   { key: 'sobre', label: 'Sobre', href: '/sobre' },
 ] as const;
 
@@ -35,7 +36,11 @@ export function AppHeader({ active = 'home' }: AppHeaderProps) {
               key={link.key}
               activeOpacity={0.78}
               onPress={() => router.push(link.href)}
-              style={[styles.navButton, isActive && styles.navButtonActive]}
+              style={[
+                styles.navButton,
+                isCompact && styles.navButtonCompact,
+                isActive && styles.navButtonActive,
+              ]}
             >
               <Text style={[styles.navText, isActive && styles.navTextActive]}>
                 {link.label}
@@ -88,11 +93,16 @@ const styles = StyleSheet.create({
   navButton: {
     minHeight: 36,
     justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 8,
     paddingHorizontal: 12,
     backgroundColor: '#FFF6EF',
     borderWidth: 1,
     borderColor: '#FFE0C2',
+  },
+  navButtonCompact: {
+    flexGrow: 1,
+    minWidth: 104,
   },
   navButtonActive: {
     backgroundColor: '#FF7A00',

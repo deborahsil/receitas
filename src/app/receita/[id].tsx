@@ -21,6 +21,7 @@ export default function ReceitaDetalhes() {
   const [, setFavoriteVersion] = useState(0);
   const recipe = receitas[String(id)];
   const isWide = width >= 820;
+  const isCompact = width < 520;
 
   if (!recipe) {
     return (
@@ -47,9 +48,13 @@ export default function ReceitaDetalhes() {
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
         <AppHeader active="receitas" />
 
-        <View style={[styles.hero, isWide && styles.heroWide]}>
-          <View style={styles.imageWrap}>
-            <Image source={{ uri: getRecipeImage(recipe) }} resizeMode="cover" style={styles.image} />
+        <View style={[styles.hero, isCompact && styles.heroCompact, isWide && styles.heroWide]}>
+          <View style={[styles.imageWrap, isCompact && styles.imageWrapCompact]}>
+            <Image
+              source={{ uri: getRecipeImage(recipe) }}
+              resizeMode="cover"
+              style={[styles.image, isCompact && styles.imageCompact]}
+            />
           </View>
 
           <View style={styles.summary}>
@@ -60,23 +65,38 @@ export default function ReceitaDetalhes() {
             <Text style={[styles.category, { color: categoryDetails[recipe.categoria].color }]}>
               {recipe.categoria}
             </Text>
-            <Text style={styles.title}>{recipe.nome}</Text>
+            <Text style={[styles.title, isCompact && styles.titleCompact]}>{recipe.nome}</Text>
             <Text style={styles.description}>{recipe.descricao}</Text>
 
-            <TouchableOpacity
-              activeOpacity={0.84}
-              style={[styles.favoriteButton, recipe.favorita && styles.favoriteButtonActive]}
-              onPress={handleToggleFavorite}
-            >
-              <Text
-                style={[
-                  styles.favoriteButtonText,
-                  recipe.favorita && styles.favoriteButtonTextActive,
-                ]}
+            <View style={styles.actionRow}>
+              <TouchableOpacity
+                activeOpacity={0.84}
+                style={[styles.favoriteButton, recipe.favorita && styles.favoriteButtonActive]}
+                onPress={handleToggleFavorite}
               >
-                {recipe.favorita ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
-              </Text>
-            </TouchableOpacity>
+                <Text
+                  style={[
+                    styles.favoriteButtonText,
+                    recipe.favorita && styles.favoriteButtonTextActive,
+                  ]}
+                >
+                  {recipe.favorita ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                activeOpacity={0.84}
+                style={styles.shareButton}
+                onPress={() =>
+                  router.push({
+                    pathname: '/compartilhar/[id]',
+                    params: { id: recipe.id },
+                  })
+                }
+              >
+                <Text style={styles.shareButtonText}>Compartilhar receita</Text>
+              </TouchableOpacity>
+            </View>
 
             <View style={styles.infoGrid}>
               <View style={styles.infoCard}>
@@ -95,7 +115,7 @@ export default function ReceitaDetalhes() {
           </View>
         </View>
 
-        <View style={[styles.content, isWide && styles.contentWide]}>
+        <View style={[styles.content, isCompact && styles.contentCompact, isWide && styles.contentWide]}>
           <View style={styles.block}>
             <Text style={styles.sectionTitle}>Ingredientes</Text>
 
@@ -144,6 +164,9 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     gap: 20,
   },
+  heroCompact: {
+    paddingHorizontal: 14,
+  },
   heroWide: {
     flexDirection: 'row',
     alignItems: 'stretch',
@@ -155,10 +178,16 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     backgroundColor: '#F5E5D6',
   },
+  imageWrapCompact: {
+    minHeight: 250,
+  },
   image: {
     width: '100%',
     height: '100%',
     minHeight: 320,
+  },
+  imageCompact: {
+    minHeight: 250,
   },
   summary: {
     flex: 1,
@@ -183,15 +212,25 @@ const styles = StyleSheet.create({
     lineHeight: 46,
     marginTop: 8,
   },
+  titleCompact: {
+    fontSize: 31,
+    lineHeight: 37,
+  },
   description: {
     color: '#6B6259',
     fontSize: 17,
     lineHeight: 25,
     marginTop: 12,
   },
-  favoriteButton: {
-    alignSelf: 'flex-start',
+  actionRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
     marginTop: 18,
+  },
+  favoriteButton: {
+    flexGrow: 1,
+    alignItems: 'center',
     borderRadius: 8,
     borderWidth: 1,
     borderColor: '#FF7A00',
@@ -209,6 +248,21 @@ const styles = StyleSheet.create({
   },
   favoriteButtonTextActive: {
     color: '#FFFFFF',
+  },
+  shareButton: {
+    flexGrow: 1,
+    alignItems: 'center',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#241A12',
+    backgroundColor: '#241A12',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+  },
+  shareButtonText: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: '900',
   },
   infoGrid: {
     flexDirection: 'row',
@@ -244,6 +298,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 12,
     gap: 16,
+  },
+  contentCompact: {
+    paddingHorizontal: 14,
   },
   contentWide: {
     flexDirection: 'row',
