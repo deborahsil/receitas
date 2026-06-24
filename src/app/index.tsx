@@ -556,21 +556,6 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingRight: 20,
   },
-  categoryCard: {
-    width: 250,
-    minHeight: 130,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#F0E1D2',
-    borderTopWidth: 5,
-    padding: 16,
-    
-  },
-
-inputRow: {
-  gap: 10,
-},
   categoryCardTitle: {
     color: '#241A12',
     fontSize: 20,
@@ -655,7 +640,6 @@ inputRow: {
     flexBasis: '32%',
     minWidth: 220,
     flexGrow: 1,
-  
     minHeight: 130,
     backgroundColor: '#FFFFFF',
     borderRadius: 8,
