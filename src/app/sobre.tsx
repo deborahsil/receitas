@@ -1,4 +1,3 @@
-import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -56,7 +55,7 @@ export default function Sobre() {
               <Text style={styles.cardTitle}>Desenvolvido por</Text>
               <Text style={styles.author}>Giovanna Isabela</Text>
               <Text style={styles.author}>Beatriz Marchesini</Text>
-              <Text style={styles.author}>Deborah</Text>
+              <Text style={styles.author}>Deborah Silva</Text>
             </View>
           </View>
         </View>
